@@ -3,8 +3,7 @@ import {cart} from './data/checkoutSummary.js';
 import {format_currency} from './data/utils/money.js';
 import {deliveryOptions, format_cost} from './data/utils/deliveryDate.js';
 import {updated_payment_details} from './data/paymentSummary.js'
-import {addOrder} from './data/orderSummary.js'
-
+import {update_order} from './data/orderSummary.js';
 
 
 
@@ -63,10 +62,10 @@ function get_delivery_html(cartProduct) {
 
 export function render_checkout_page() {
   
-  let orderSummaryHtml = '';
+  let checkoutSummaryHtml = '';
   cart.cartItems.forEach((cartProduct) => {
       const product = get_product(cartProduct.id);
-      orderSummaryHtml += `
+      checkoutSummaryHtml += `
           <div class="js-cart-item-container-${cartProduct.id} cart-item-container">
             <div class="delivery-date">
               Delivery date: ${deliveryOptions[cartProduct.deliveryOption-1].date}
@@ -147,7 +146,7 @@ export function render_checkout_page() {
   `;
 
   document.querySelector('.js-return-to-home-link').innerHTML = `${cart.get_cart_quantity()} items`;
-  document.querySelector('.order-summary').innerHTML = orderSummaryHtml;
+  document.querySelector('.order-summary').innerHTML = checkoutSummaryHtml;
   document.querySelector('.payment-summary').innerHTML = paymentSummaryHtml;
 
 
@@ -253,17 +252,9 @@ export function render_checkout_page() {
 
 
 
-  document.querySelector('.js-place-order')
-    .addEventListener('click', async ()=>{
-      const response = await fetch('https://supersimplebackend.dev/orders', {
-        method : 'POST',
-        headers : {'Content-Type' : 'application/json'},
-        body : JSON.stringify({cart : cart})
-      })
+  document.querySelector('.js-place-order').addEventListener('click', ()=>{
+    update_order()
+    window.location.href='orders.html';
+  })
 
-      const order = await response.json();
-      addOrder(order);
-
-      window.location.href = 'orders.html';
-    })
 }

@@ -14,8 +14,12 @@ class Cart  {
 
 
     /*----------Methods----------*/
-    #load_cart () {
+    #load_cart() {
         this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [];
+    }
+
+    get_clear_cart() {
+        localStorage.removeItem(this.#localStorageKey);
     }
 
     #save_cart() {

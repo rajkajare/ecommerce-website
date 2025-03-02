@@ -78,6 +78,23 @@ class Appliance extends Product{
 
 
 export let products = [];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-----------------------Functions-----------------------*/
+
 export function load_products_fetch() {
   const promise = fetch(
     'https://supersimplebackend.dev/products'
@@ -110,18 +127,6 @@ export function load_products_fetch() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-/*-----------------------Functions-----------------------*/
 export function get_product(cartProductId) {
   for (let i=0; i<products.length; i++) {
     if (products[i].id === cartProductId) {

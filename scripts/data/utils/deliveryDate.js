@@ -17,10 +17,11 @@ import {format_currency } from './money.js';
 
 /*--------------------------Data--------------------------*/
 
+export const deliveryDays = [7, 3, 1];
 export const deliveryOptions = [
-    {id: 1, date: get_date(7), cost : 0},
-    {id: 2, date: get_date(3), cost : 499},
-    {id: 3, date: get_date(1), cost : 999}
+    {id: 1, date: get_date(deliveryDays[0]), cost : 0},
+    {id: 2, date: get_date(deliveryDays[1]), cost : 499},
+    {id: 3, date: get_date(deliveryDays[2]), cost : 999}
 ];
 
 
@@ -58,11 +59,27 @@ function skipWeekend(TodaysDate, daysAfter) {
 
 
 
-function get_date(daysAfter) {
-    let TodaysDate = dayjs();
+export function get_date(daysAfter, format=true, TodaysDate=false) {
+    if (!TodaysDate) {
+        TodaysDate = dayjs()
+    } else {
+        TodaysDate = dayjs(TodaysDate)
+    }
     daysAfter = skipWeekend(TodaysDate, daysAfter)
     let desiredDate = TodaysDate.add(daysAfter, 'day');
-    return desiredDate.format('dddd, MMMM D')
+    if (format) {
+        return desiredDate.format('dddd, MMMM D')
+    } else {
+        return dayjs(desiredDate)
+    }
+}
+
+
+
+
+
+export function isDatePassed(deliveryOption, orderPlaced) {
+    return ! get_date(deliveryDays[deliveryOption-1], false, orderPlaced).isBefore(get_date(0, false), "day");
 }
 
 
