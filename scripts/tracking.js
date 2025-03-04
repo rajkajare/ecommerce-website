@@ -41,7 +41,7 @@ function render_tracking_page() {
           Quantity: ${tracked_product[2]}
         </div>
 
-        <img class="product-image" src=${"../" + product.image}>
+        <img class="product-image" src=${"./" + product.image}>
 
         <div class="progress-labels-container">
           <div class="progress-label">
