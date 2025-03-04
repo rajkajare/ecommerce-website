@@ -36,7 +36,7 @@ function get_orderDetailsHtml(orderCart, orderPlaced) {
         const product = get_product(cartProduct.id);
         orderDetailsGridHtml += `
             <div class="product-image-container">
-                <img src=${"../" + product.image}>
+                <img src=${"./" + product.image}>
                 </div>
 
                 <div class="product-details">
